@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from element import Element
-
+from linked_list import LinkedList
 
 class HashTable(object):
     """
@@ -15,7 +15,7 @@ class HashTable(object):
         :param size: int
         :return None
         """
-        self.storage = [[] for _ in range(size)]
+        self.storage = [LinkedList() for _ in range(size)]
         self.size: int = size
         self.length: int = 0
 
@@ -23,28 +23,14 @@ class HashTable(object):
 
     def hash(self, key: str) -> int:
         """
-        dado uma chave e ínidice, verifica possíveis colisões e
+        dado uma chave e indice, verifica possíveis colisões e
         retorna o índice correto
         :param key: str
         :return int
         """
         return hash(key) % self.size
 
-    def linear_probing(self, key: str, index: int) -> int:
-        """
-        dado uma chave e ínidice, verifica possíveis colisões e
-        retorna o índice correto
-        :param key: str
-        :param index: int
-        :return int
-        """
-        while self.storage[index][0][0] != key and self.storage[index][0][0] is not None:
-            self.collisions += 1
-            index = (index + 1) % 10
-
-        return index
-
-    def __setitem__(self, key: str, value: Element) -> None:
+    def __setitem__(self, key: str, value: dict) -> None:
         """
         adicionar chave e valor, no caso de conflitos, adiciona a
         sub lista
@@ -64,7 +50,7 @@ class HashTable(object):
             self.collisions += 1
 
         else:
-            self.storage[storage_idx].append([key, value])
+            self.storage[storage_idx].add(Element(value, key))
             self.length += 1
 
     def __getitem__(self, key: str) -> Element:
@@ -76,15 +62,12 @@ class HashTable(object):
         """
         storage_idx = self.hash(key)
 
-        value = self.storage[storage_idx][0][0]
+        for i in range(len(self.storage[storage_idx])):
+            if self.storage[storage_idx][i].key == key:
+                return self.storage[storage_idx][i].data
 
-        if value != key:
-            storage_idx = self.linear_probing(key, storage_idx)
 
-        if value == key:
-            return self.storage[storage_idx][0][1]
-
-        raise KeyError(f'Key {key} dont exist')
+        raise KeyError(f'Key {key} doesn\'t exist')
 
     def __delitem__(self, key: str) -> None:
         """
@@ -181,23 +164,14 @@ class HashTable(object):
         representação em str da Hash Table
         :return: string
         """
-        res = []
-
+        res = "[\t"
+        
         for ele in self.storage:
             for key_value in ele:
-                if isinstance(key_value[0], str):
-                    key_str = '\'{}\''.format(key_value[0])
-                else:
-                    key_str = '{}'.format(key_value[0])
-                if isinstance(key_value[1], str):
-                    value_str = '\'{}\''.format(key_value[1])
-                else:
-                    value_str = '{}'.format(key_value[1])
-
-                res.append('{}: {}'.format(key_str, value_str))
-
-        key_value_pairs_str = '{}'.format(', '.join(res))
-        return '{' + key_value_pairs_str + '}'
+                res += f"{key_value} |\t"
+        
+        
+        return res + " ]"
 
     def __repr__(self) -> str:
         """

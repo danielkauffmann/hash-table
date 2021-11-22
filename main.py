@@ -2,7 +2,6 @@ from hash_table import HashTable
 from data_set import DataSet
 from element import Element
 
-
 def load_data(table: HashTable, data: DataSet) -> None:
     """
     carrega os dados na Hash Table
@@ -26,7 +25,7 @@ def main():
 
     # Mostra o relatório da Hash Table
     hash_table.report()
-
+ 
 
 if __name__ == '__main__':
     main()
