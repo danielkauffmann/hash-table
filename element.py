@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 class Element(object):
     """
     Elemento da linked list
@@ -6,7 +9,7 @@ class Element(object):
     def __init__(self, data: dict, key: str = None):
         self.key: str = key
         self.data: dict = data
-        self.next: Element = None
+        self.next: Element | None = None
 
     def __str__(self):
         """
@@ -30,7 +33,7 @@ class Element(object):
     
     def __setitem__(self, index: int, value):
         """
-        Facilita o override dos dados da classe 
+        Facilita a alteração dos dados da classe
         """
         if index == 0:
             self.key = value
@@ -41,12 +44,16 @@ class Element(object):
         if index == 3:
             self.next = value
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
-        dado da instância da classe
-        :return: dict
+        Representação da instância da classe
+        :return: str
         """
         return self.__str__()
 
-    def __next__(self):
+    def __next__(self) -> Element | None:
+        """
+        Retorna o próximo elemento da Linked list se existir
+        :return: Element | None
+        """
         yield self.next

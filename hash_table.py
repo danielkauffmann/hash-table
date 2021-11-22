@@ -3,6 +3,7 @@ from __future__ import annotations
 from element import Element
 from linked_list import LinkedList
 
+
 class HashTable(object):
     """
     Implementação de uma Hash Table em Python puro
@@ -30,7 +31,7 @@ class HashTable(object):
         """
         return hash(key) % self.size
 
-    def __setitem__(self, key: str, value: dict) -> None:
+    def __setitem__(self, key: str, value: Element) -> None:
         """
         adicionar chave e valor, no caso de conflitos, adiciona a
         sub lista
@@ -50,10 +51,10 @@ class HashTable(object):
             self.collisions += 1
 
         else:
-            self.storage[storage_idx].add(Element(value, key))
+            self.storage[storage_idx].add(value)
             self.length += 1
 
-    def __getitem__(self, key: str) -> Element:
+    def __getitem__(self, key: str) -> dict:
         """
         busca pela chave, no caso de não encontrado, retorna um erro
         :param key: str
@@ -65,7 +66,6 @@ class HashTable(object):
         for i in range(len(self.storage[storage_idx])):
             if self.storage[storage_idx][i].key == key:
                 return self.storage[storage_idx][i].data
-
 
         raise KeyError(f'Key {key} doesn\'t exist')
 
@@ -148,7 +148,7 @@ class HashTable(object):
         """
         return self.__iterate_kv()
 
-    def get(self, key: str) -> Element | None:
+    def get(self, key: str) -> dict | None:
         """
         retorna o valor dado uma chave
         :param key: str
@@ -165,12 +165,11 @@ class HashTable(object):
         :return: string
         """
         res = "[\t"
-        
+
         for ele in self.storage:
             for key_value in ele:
                 res += f"{key_value} |\t"
-        
-        
+
         return res + " ]"
 
     def __repr__(self) -> str:
