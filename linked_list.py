@@ -11,24 +11,12 @@ class LinkedList(Sequence):
         self.head = None
         self.length = 0
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """
+        retorna o tamanho da Linked list
+        :return: int
+        """
         return self.length
-
-    def __repr__(self) -> str:
-        """
-        Representação da linked list
-        :return: str
-        """
-        node = self.head
-        nodes = []
-
-        while node is not None:
-            nodes.append(node.key)
-            node = node.next
-
-        nodes.append("None")
-
-        return " -> ".join(nodes)
 
     def __iter__(self) -> list:
         """
@@ -60,6 +48,12 @@ class LinkedList(Sequence):
             counter += 1
 
         return node
+
+    def __contains__(self, key: str) -> bool:
+        """
+        Verifica se a linked list possui um Element com a key desejada
+        """
+        return key in self.keys
 
     def keys(self) -> list[str]:
         """
@@ -97,8 +91,18 @@ class LinkedList(Sequence):
 
         raise ValueError("Not Found")
 
-    def __contains__(self, key: str) -> bool:
+    def __repr__(self) -> str:
         """
-        Verifica se a linked list possui um Element com a key desejada 
+        Representação da Linked list
+        :return: str
         """
-        return key in self.keys
+        node = self.head
+        nodes = []
+
+        while node is not None:
+            nodes.append(node.key)
+            node = node.next
+
+        nodes.append("None")
+
+        return " -> ".join(nodes)

@@ -11,13 +11,6 @@ class Element(object):
         self.data: dict = data
         self.next: Element | None = None
 
-    def __str__(self):
-        """
-        representação em str da instância do objeto
-        :return: dict
-        """
-        return f"Key: {self.key}, Values: {self.data}"
-    
     def __getitem__(self, index: int):
         """
         Facilita o acesso aos dados da classe 
@@ -25,12 +18,12 @@ class Element(object):
         if index == 0:
             return self.key
 
-        if index == 2:        
+        if index == 2:
             return self.data
-        
+
         if index == 3:
             return self.next
-    
+
     def __setitem__(self, index: int, value):
         """
         Facilita a alteração dos dados da classe
@@ -38,18 +31,11 @@ class Element(object):
         if index == 0:
             self.key = value
 
-        if index == 2:        
+        if index == 2:
             self.data = value
-        
+
         if index == 3:
             self.next = value
-
-    def __repr__(self) -> str:
-        """
-        Representação da instância da classe
-        :return: str
-        """
-        return self.__str__()
 
     def __next__(self) -> Element | None:
         """
@@ -57,3 +43,17 @@ class Element(object):
         :return: Element | None
         """
         yield self.next
+
+    def __str__(self):
+        """
+        representação em str da instância do objeto
+        :return: dict
+        """
+        return f"Key: {self.key}, Values: {self.data}"
+
+    def __repr__(self) -> str:
+        """
+        Representação da instância da classe
+        :return: str
+        """
+        return self.__str__()
